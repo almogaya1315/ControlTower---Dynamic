@@ -29,15 +29,17 @@ namespace CT.Common.Extensions
         {
             if (key == null) throw new ArgumentNullException("The key is null.");
 
+            if (Dictionary.Keys.Contains(key))
+                throw new ArgumentException("The key has already been added.");
+
             Value item;
-            bool exists = Dictionary.TryGetValue(key, out item);
-            if (exists) throw new ArgumentException("The key has already been added.");
-            else
+            if (Dictionary.TryGetValue(key, out item))
             {
                 if (Equals(item, value)) return;
                 Dictionary[key] = value;
 
-
+                RaiseCollectionChanged(NotifyCollectionChangedAction.Replace, new KeyValuePair<Key, Value>(key, value), 
+                                                                              new KeyValuePair<Key, Value>(key, item));
             }
         }
         #endregion
@@ -178,8 +180,41 @@ namespace CT.Common.Extensions
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-        #region OnChanged Overloads
-        protected virtual RaisePropertyChanged(string )
+        #region RaiseChanged Overloads
+        void RaisePropertyChanged()
+        {
+            RaisePropertyChanged(CountString);
+            RaisePropertyChanged(IndexerName);
+            RaisePropertyChanged(KeysName);
+            RaisePropertyChanged(ValuesName);
+        }
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            if (propertyName != null)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        void RaiseCollectionChanged()
+        {
+            RaisePropertyChanged();
+            CollectionChanged?.Invoke(this, 
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+        void RaiseCollectionChanged(NotifyCollectionChangedAction action, KeyValuePair<Key, Value> changedItem)
+        {
+            RaisePropertyChanged();
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, changedItem));
+        }
+        void RaiseCollectionChanged(NotifyCollectionChangedAction action, KeyValuePair<Key, Value> newItem, 
+                                                                          KeyValuePair<Key, Value> oldItem)
+        {
+            RaisePropertyChanged();
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, newItem, oldItem));
+        }
+        void RaiseCollectionChanged(NotifyCollectionChangedAction action, ICollection<KeyValuePair<Key, Value>> newItems)
+        {
+            RaisePropertyChanged();
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, newItems));
+        }
         #endregion
     }
 }
