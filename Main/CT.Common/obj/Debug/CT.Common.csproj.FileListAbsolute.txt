@@ -1,0 +1,6 @@
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\bin\Debug\CT.Common.dll.config
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\bin\Debug\CT.Common.dll
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\bin\Debug\CT.Common.pdb
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\obj\Debug\CT.Common.csprojResolveAssemblyReference.cache
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\obj\Debug\CT.Common.dll
+C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.Common\obj\Debug\CT.Common.pdb
