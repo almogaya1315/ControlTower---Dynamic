@@ -31,3 +31,6 @@ C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic
 C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.UI\obj\Debug\CT.UI.csproj.GenerateResource.Cache
 C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.UI\obj\Debug\CT.UI.exe
 C:\Users\matsll\Documents\Visual Studio 2015\Projects\Git\ControlTower---Dynamic\Main\CT.UI\obj\Debug\CT.UI.pdb
+E:\Git_Code\ControlTower---Dynamic\Main\CT.UI\bin\Debug\CT.UI.exe.config
+E:\Git_Code\ControlTower---Dynamic\Main\CT.UI\obj\Debug\CT.UI.exe
+E:\Git_Code\ControlTower---Dynamic\Main\CT.UI\obj\Debug\CT.UI.pdb
