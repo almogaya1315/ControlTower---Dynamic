@@ -11,33 +11,74 @@ namespace CT.Common.Extensions
 {
     public class ObservableDictionary<Key, Value> : IDictionary<Key, Value>, INotifyCollectionChanged, INotifyPropertyChanged
     {
+        #region private props
+        const string CountString = "Count";
+        const string IndexerName = "Item[]";
+        const string KeysName = "Keys";
+        const string ValuesName = "Values";
+
+        IDictionary<Key, Value> _dictionary;
+        protected IDictionary<Key, Value> Dictionary
+        {
+            get { return _dictionary; }
+        }
+        #endregion
+
+        #region private methods
+        void Insert(Key key, Value value)
+        {
+            if (key == null) throw new ArgumentNullException("The key is null.");
+
+            Value item;
+            bool exists = Dictionary.TryGetValue(key, out item);
+            if (exists) throw new ArgumentException("The key has already been added.");
+            else
+            {
+                if (Equals(item, value)) return;
+                Dictionary[key] = value;
+
+
+            }
+        }
+        #endregion
+
+        #region ctors
+        public ObservableDictionary()
+        {
+            _dictionary = new Dictionary<Key, Value>();
+        }
+        public ObservableDictionary(IDictionary<Key, Value> dictionary)
+        {
+            _dictionary = new Dictionary<Key, Value>(dictionary);
+        }
+        public ObservableDictionary(IEqualityComparer<Key> comparer)
+        {
+            _dictionary = new Dictionary<Key, Value>(comparer);
+        }
+        public ObservableDictionary(int capacity)
+        {
+            _dictionary = new Dictionary<Key, Value>(capacity);
+        }
+        public ObservableDictionary(IDictionary<Key, Value> dictionary, IEqualityComparer<Key> comparer)
+        {
+            _dictionary = new Dictionary<Key, Value>(dictionary, comparer);
+        }
+        public ObservableDictionary(int capacity, IEqualityComparer<Key> comparer)
+        {
+            _dictionary = new Dictionary<Key, Value>(capacity, comparer);
+        }
+        #endregion
+
         #region IDictionary
         public Value this[Key key]
         {
             get
             {
-                throw new NotImplementedException();
+                return Dictionary[key];
             }
-
             set
             {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                throw new NotImplementedException();
+                Insert(key, value);
             }
         }
 
@@ -110,6 +151,24 @@ namespace CT.Common.Extensions
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        #region ICollection<KeyValuePair> (implemented in IDictionary)
+        public int Count
+        {
+            get
+            {
+                return Dictionary.Count;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return Dictionary.IsReadOnly;
+            }
         }
         #endregion
 
