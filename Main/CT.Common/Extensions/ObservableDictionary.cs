@@ -78,6 +78,7 @@ namespace CT.Common.Extensions
             }
             set
             {
+                Dictionary[key] = value;
                 Insert(key, value);
             }
         }
@@ -86,7 +87,7 @@ namespace CT.Common.Extensions
         {
             get
             {
-                throw new NotImplementedException();
+                return Dictionary.Keys;
             }
         }
 
@@ -94,7 +95,7 @@ namespace CT.Common.Extensions
         {
             get
             {
-                throw new NotImplementedException();
+                return Dictionary.Values;
             }
         }
 
@@ -175,6 +176,10 @@ namespace CT.Common.Extensions
         #region INotify
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region OnChanged Overloads
+        protected virtual RaisePropertyChanged(string )
         #endregion
     }
 }
