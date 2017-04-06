@@ -24,8 +24,8 @@ namespace CT.Common.Extensions
         }
         #endregion
 
-        #region private methods
-        void Insert(Key key, Value newValue)
+        #region custom methods
+        private void Insert(Key key, Value newValue)
         {
             if (key == null) throw new ArgumentNullException("The key is null.");
 
@@ -44,6 +44,23 @@ namespace CT.Common.Extensions
             {
                 Dictionary[key] = newValue;
                 RaiseCollectionChanged(NotifyCollectionChangedAction.Add, new KeyValuePair<Key, Value>(key, newValue));
+            }
+        }
+        public void AddRange(IDictionary<Key, Value> items)
+        {
+            if (items == null) throw new ArgumentNullException("The hash is null.");
+
+            if (items.Count > 0)
+            {
+                if (Dictionary.Count > 0)
+                {
+                    if (items.Keys.Any(k => Dictionary.ContainsKey(k)))
+                        throw new ArgumentException("An item with the same key already exsist.");
+                    else foreach (var item in items) Dictionary.Add(item);
+                }
+                else _dictionary = new Dictionary<Key, Value>(items);
+
+                RaiseCollectionChanged(NotifyCollectionChangedAction.Add, items);
             }
         }
         #endregion
@@ -88,7 +105,6 @@ namespace CT.Common.Extensions
                 Insert(key, value);
             }
         }
-
         public ICollection<Key> Keys
         {
             get
@@ -96,7 +112,6 @@ namespace CT.Common.Extensions
                 return Dictionary.Keys;
             }
         }
-
         public ICollection<Value> Values
         {
             get
@@ -104,32 +119,14 @@ namespace CT.Common.Extensions
                 return Dictionary.Values;
             }
         }
-
         public void Add(Key key, Value value)
         {
             Insert(key, value);
         }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(KeyValuePair<Key, Value> item)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool ContainsKey(Key key)
         {
-            throw new NotImplementedException();
+            return Dictionary.ContainsKey(key);
         }
-
-        public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Remove(Key key)
         {
             if (key == null) throw new ArgumentNullException("The key is null.");
@@ -141,14 +138,13 @@ namespace CT.Common.Extensions
                 RaiseCollectionChanged(NotifyCollectionChangedAction.Remove, new KeyValuePair<Key, Value>(key, toRemove));
             return isRemoved;
         }
-
         public bool TryGetValue(Key key, out Value value)
         {
-            throw new NotImplementedException();
+            return Dictionary.TryGetValue(key, out value);
         }
         #endregion
 
-        #region IEnumerator
+        #region IEnumerator (implemented in IDictionary)
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
             return Dictionary.GetEnumerator();
@@ -168,6 +164,23 @@ namespace CT.Common.Extensions
         {
             return Remove(item.Key);
         }
+        public void Clear()
+        {
+            if (Dictionary.Count > 0)
+            {
+                Dictionary.Clear();
+                RaiseCollectionChanged();
+            }
+
+        }
+        public bool Contains(KeyValuePair<Key, Value> item)
+        {
+            return Dictionary.Contains(item);
+        }
+        public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
+        {
+            Dictionary.CopyTo(array, arrayIndex);
+        }
         public int Count
         {
             get
@@ -175,7 +188,6 @@ namespace CT.Common.Extensions
                 return Dictionary.Count;
             }
         }
-
         public bool IsReadOnly
         {
             get
@@ -206,7 +218,7 @@ namespace CT.Common.Extensions
         void RaiseCollectionChanged()
         {
             RaisePropertyChanged();
-            CollectionChanged?.Invoke(this, 
+            CollectionChanged?.Invoke(this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
         void RaiseCollectionChanged(NotifyCollectionChangedAction action, KeyValuePair<Key, Value> changedItem)
@@ -214,7 +226,7 @@ namespace CT.Common.Extensions
             RaisePropertyChanged();
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, changedItem));
         }
-        void RaiseCollectionChanged(NotifyCollectionChangedAction action, KeyValuePair<Key, Value> newItem, 
+        void RaiseCollectionChanged(NotifyCollectionChangedAction action, KeyValuePair<Key, Value> newItem,
                                                                           KeyValuePair<Key, Value> oldItem)
         {
             RaisePropertyChanged();
