@@ -25,21 +25,25 @@ namespace CT.Common.Extensions
         #endregion
 
         #region private methods
-        void Insert(Key key, Value value)
+        void Insert(Key key, Value newValue)
         {
             if (key == null) throw new ArgumentNullException("The key is null.");
 
             if (Dictionary.Keys.Contains(key))
-                throw new ArgumentException("The key has already been added.");
+                throw new ArgumentException("The key already exists.");
 
-            Value item;
-            if (Dictionary.TryGetValue(key, out item))
+            Value oldValue;
+            if (Dictionary.TryGetValue(key, out oldValue))
             {
-                if (Equals(item, value)) return;
-                Dictionary[key] = value;
-
-                RaiseCollectionChanged(NotifyCollectionChangedAction.Replace, new KeyValuePair<Key, Value>(key, value), 
-                                                                              new KeyValuePair<Key, Value>(key, item));
+                if (Equals(oldValue, newValue)) return;
+                Dictionary[key] = newValue;
+                RaiseCollectionChanged(NotifyCollectionChangedAction.Replace, new KeyValuePair<Key, Value>(key, newValue),
+                                                                              new KeyValuePair<Key, Value>(key, oldValue));
+            }
+            else
+            {
+                Dictionary[key] = newValue;
+                RaiseCollectionChanged(NotifyCollectionChangedAction.Add, new KeyValuePair<Key, Value>(key, newValue));
             }
         }
         #endregion
