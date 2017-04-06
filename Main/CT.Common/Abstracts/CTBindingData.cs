@@ -274,10 +274,16 @@ namespace CT.Common.Abstracts
         }
         #endregion
 
-        #region Nested batch classes
-        internal static class CheckpointBatch
+        #region Nested batch class
+        public class BatchCode
         {
-
+            public void CaseLanding_1_Checkpoint(FlightDTO FlightInLanding1, FlightDTO flight) 
+            {
+                //set the plane image accordingly
+                flight.PlaneImgPath = PlaneImageSource.PlaneLeft.ToString();
+                //resets the current checkpoint's flight binding by the cuurent flight
+                FlightInLanding1 = InitializeFlightBindingObject(flight);
+            }
         }
         #endregion
 
