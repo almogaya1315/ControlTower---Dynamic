@@ -130,14 +130,16 @@ namespace CT.Common.Extensions
             throw new NotImplementedException();
         }
 
-        public bool Remove(KeyValuePair<Key, Value> item)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Remove(Key key)
         {
-            throw new NotImplementedException();
+            if (key == null) throw new ArgumentNullException("The key is null.");
+
+            Value toRemove;
+            Dictionary.TryGetValue(key, out toRemove);
+            bool isRemoved = Dictionary.Remove(key);
+            if (isRemoved)
+                RaiseCollectionChanged(NotifyCollectionChangedAction.Remove, new KeyValuePair<Key, Value>(key, toRemove));
+            return isRemoved;
         }
 
         public bool TryGetValue(Key key, out Value value)
@@ -149,11 +151,11 @@ namespace CT.Common.Extensions
         #region IEnumerator
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return Dictionary.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return ((IEnumerable)Dictionary).GetEnumerator();
         }
         #endregion
 
@@ -161,6 +163,10 @@ namespace CT.Common.Extensions
         public void Add(KeyValuePair<Key, Value> item)
         {
             Insert(item.Key, item.Value);
+        }
+        public bool Remove(KeyValuePair<Key, Value> item)
+        {
+            return Remove(item.Key);
         }
         public int Count
         {
