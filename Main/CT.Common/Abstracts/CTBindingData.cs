@@ -1,5 +1,6 @@
 ﻿using CT.Common.DTO_Models;
 using CT.Common.Enums;
+using CT.Common.Extensions;
 using CT.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -289,6 +290,8 @@ namespace CT.Common.Abstracts
                 RaisePropertyChanged("Checkpoints");
             }
         }
+
+        ObservableDictionary<CheckpointDTO, >
         /*End*/
 
         string terminal1State;
