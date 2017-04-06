@@ -275,7 +275,10 @@ namespace CT.Common.Abstracts
         #endregion
 
         #region Nested batch classes
-        internal static class BatchCheckpoint
+        internal static class CheckpointBatch
+        {
+
+        }
         #endregion
 
         #region binding props
