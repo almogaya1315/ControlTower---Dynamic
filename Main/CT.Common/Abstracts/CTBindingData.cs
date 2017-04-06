@@ -274,6 +274,10 @@ namespace CT.Common.Abstracts
         }
         #endregion
 
+        #region Nested batch classes
+        internal static class BatchCheckpoint
+        #endregion
+
         #region binding props
 
         /*TestUserControl*/
