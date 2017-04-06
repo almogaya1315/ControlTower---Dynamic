@@ -107,7 +107,7 @@ namespace CT.Common.Extensions
 
         public void Add(Key key, Value value)
         {
-            throw new NotImplementedException();
+            Insert(key, value);
         }
 
         public void Clear()
@@ -160,7 +160,7 @@ namespace CT.Common.Extensions
         #region ICollection<KeyValuePair> (implemented in IDictionary)
         public void Add(KeyValuePair<Key, Value> item)
         {
-            throw new NotImplementedException();
+            Insert(item.Key, item.Value);
         }
         public int Count
         {
