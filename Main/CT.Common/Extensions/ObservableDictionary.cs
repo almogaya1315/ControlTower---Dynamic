@@ -101,11 +101,6 @@ namespace CT.Common.Extensions
             }
         }
 
-        public void Add(KeyValuePair<Key, Value> item)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Add(Key key, Value value)
         {
             throw new NotImplementedException();
@@ -131,11 +126,6 @@ namespace CT.Common.Extensions
             throw new NotImplementedException();
         }
 
-        public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Remove(KeyValuePair<Key, Value> item)
         {
             throw new NotImplementedException();
@@ -150,7 +140,13 @@ namespace CT.Common.Extensions
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region IEnumerator
+        public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
@@ -158,6 +154,10 @@ namespace CT.Common.Extensions
         #endregion
 
         #region ICollection<KeyValuePair> (implemented in IDictionary)
+        public void Add(KeyValuePair<Key, Value> item)
+        {
+            throw new NotImplementedException();
+        }
         public int Count
         {
             get
