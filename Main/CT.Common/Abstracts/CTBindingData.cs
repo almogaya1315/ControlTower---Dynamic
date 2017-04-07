@@ -277,12 +277,12 @@ namespace CT.Common.Abstracts
         #region Nested batch class
         public class BatchCode
         {
-            public void CaseLanding_1_Checkpoint(FlightDTO FlightInLanding1, FlightDTO flight) 
+            public void Case_Landing1 (FlightDTO FlightInLanding1, FlightDTO flight, CTBindingData binding) 
             {
                 //set the plane image accordingly
                 flight.PlaneImgPath = PlaneImageSource.PlaneLeft.ToString();
                 //resets the current checkpoint's flight binding by the cuurent flight
-                FlightInLanding1 = InitializeFlightBindingObject(flight);
+                FlightInLanding1 = binding.InitializeFlightBindingObject(flight);
             }
         }
         #endregion
@@ -304,7 +304,19 @@ namespace CT.Common.Abstracts
             }
         }
 
-        ObservableDictionary<CheckpointDTO, >
+        ObservableDictionary<CheckpointDTO, BatchCode> checkpointSwitch;
+        public ObservableDictionary<CheckpointDTO, BatchCode> CheckpointSwitch
+        {
+            get
+            {
+                return checkpointSwitch;
+            }
+            set
+            {
+                checkpointSwitch = value;
+                RaisePropertyChanged("CheckpointSwitch");
+            }
+        }
         /*End*/
 
         string terminal1State;
